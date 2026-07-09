@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IntelX Verify — OSINT Seguro</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">IX</div><div><strong>IntelX Verify</strong><span>OSINT seguro</span></div></div>
+      <nav>
+        <button class="nav active" data-page="dashboard">Dashboard</button>
+        <button class="nav" data-page="investigar">Nova investigação</button>
+        <button class="nav" data-page="historico">Histórico</button>
+        <button class="nav" data-page="config">Configurações</button>
+      </nav>
+      <div class="notice">Uso legal: somente fontes públicas, consentimento e APIs autorizadas.</div>
+    </aside>
+    <main>
+      <section id="dashboard" class="page show">
+        <div class="hero">
+          <div><p class="eyebrow">MVP funcional</p><h1>Validação e busca real com fontes permitidas</h1><p>Consulta CNPJ pela BrasilAPI, domínio por RDAP, valida CPF/telefone localmente e gera relatório.</p></div>
+          <button class="primary" onclick="go('investigar')">Iniciar investigação</button>
+        </div>
+        <div class="grid cards">
+          <div class="card"><span>CNPJ</span><b id="statCnpj">0</b><small>consultas reais</small></div>
+          <div class="card"><span>Domínio</span><b id="statDomain">0</b><small>consultas RDAP</small></div>
+          <div class="card"><span>Validações</span><b id="statValid">0</b><small>CPF/telefone/e-mail</small></div>
+          <div class="card"><span>Relatórios</span><b id="statTotal">0</b><small>histórico local</small></div>
+        </div>
+        <div class="panel"><h2>Fontes conectadas</h2><div class="source-list">
+          <div><b>BrasilAPI</b><span>CNPJ público</span></div>
+          <div><b>RDAP</b><span>Domínios .br e internacionais</span></div>
+          <div><b>Validador local</b><span>CPF, telefone e e-mail</span></div>
+          <div><b>APIs KYC</b><span>Preparado para contratos autorizados</span></div>
+        </div></div>
+      </section>
+
+      <section id="investigar" class="page">
+        <div class="panel">
+          <h1>Nova investigação</h1>
+          <p class="muted">Escolha o tipo. CPF e telefone aqui fazem validação segura; consulta cadastral completa só com API autorizada e consentimento.</p>
+          <div class="form">
+            <label>Tipo de busca</label>
+            <select id="tipo">
+              <option value="cnpj">CNPJ — busca real BrasilAPI</option>
+              <option value="dominio">Domínio/site — busca real RDAP</option>
+              <option value="cpf">CPF — validação local</option>
+              <option value="telefone">Telefone — validação local</option>
+              <option value="email">E-mail — validação local</option>
+            </select>
+            <label>Valor</label>
+            <input id="valor" placeholder="Ex: 00.000.000/0001-00, exemplo.com.br, 11999999999" />
+            <label class="check"><input type="checkbox" id="consent" /> Confirmo que tenho autorização/base legal para realizar esta consulta.</label>
+            <button class="primary" onclick="investigar()">Executar análise</button>
+          </div>
+        </div>
+        <div id="progress" class="panel hidden"><h2>Processando</h2><div class="bar"><i id="bar"></i></div><ul id="steps"></ul></div>
+        <div id="result" class="panel hidden"></div>
+      </section>
+
+      <section id="historico" class="page"><div class="panel"><h1>Histórico</h1><div id="history"></div><button class="ghost" onclick="clearHistory()">Limpar histórico</button></div></section>
+      <section id="config" class="page"><div class="panel"><h1>Configurações</h1><p>Para CPF/telefone com dados cadastrais reais, conecte somente APIs contratadas e autorizadas.</p><textarea id="kycConfig" placeholder='Exemplo: {"provedor":"KYC autorizado","endpoint":"https://sua-api.com/verify","apiKey":"cole_a_chave_no_backend"}'></textarea><p class="danger">Nunca coloque chave secreta no frontend em produção. Use backend/proxy seguro.</p><button class="primary" onclick="saveConfig()">Salvar configuração local</button></div></section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
