@@ -1,0 +1,31 @@
+name: Test EVO Trading AI PC v0.7.1
+on:
+  push:
+    branches: ["evo-trading-pc-v0.7.1"]
+    paths:
+      - "evo-trading-ai/v0.7.1-pc/**"
+      - ".github/workflows/evo-trading-pc-v071.yml"
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: evo-trading-ai/v0.7.1-pc
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Compile
+        run: python -m py_compile core.py app.py
+      - name: Tests
+        env:
+          PYTHONPATH: .
+        run: pytest -q
