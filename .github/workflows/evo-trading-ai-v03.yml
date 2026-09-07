@@ -1,8 +1,8 @@
-name: Build EVO Trading AI v0.3 APK
+name: Build EVO Trading AI v0.4 APK
 
 on:
   push:
-    branches: ["evo-trading-lab-v0.3"]
+    branches: ["evo-trading-lab-v0.4"]
     paths:
       - "evo-trading-ai/v0.3/project/**"
       - ".github/workflows/evo-trading-ai-v03.yml"
@@ -33,6 +33,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: evo-trading-ai-v0.3-debug
+          name: evo-trading-ai-v0.4-debug
           path: evo-trading-ai/v0.3/project/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 7
