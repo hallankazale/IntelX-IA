@@ -25,5 +25,13 @@ jobs:
         run: pip install pytest
       - name: Compile tools
         run: python -m py_compile tools/export_diagnostics.py
-      - name: Tests
+      - name: Unit and safety tests
         run: pytest -q
+      - name: Validate Docker Compose
+        run: docker compose config
+      - name: Validate strategy inside Freqtrade stable_freqai
+        run: |
+          mkdir -p user_data/logs user_data/models user_data/data user_data/backtest_results diagnostics
+          docker compose pull
+          docker compose run --rm freqtrade list-strategies --strategy-path /freqtrade/user_data/strategies | tee /tmp/strategies.txt
+          grep -q EvoFreqAiStrategy /tmp/strategies.txt
