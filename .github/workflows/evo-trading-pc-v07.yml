@@ -28,4 +28,4 @@ jobs:
       - name: Compile
         run: python -m py_compile core.py app.py
       - name: Tests
-        run: pytest -q
+        run: python -m pytest -q
