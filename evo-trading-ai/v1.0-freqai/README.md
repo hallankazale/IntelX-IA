@@ -22,13 +22,13 @@ A EVO só deve avançar para capital real se demonstrar retorno líquido positiv
 Freqtrade recomenda Docker no Windows. Instale Docker Desktop e então execute:
 
 ```powershell
-cd $HOME\Desktop\EVO-Trading-AI-1.0
+cd $HOME\Desktop\EVO-Trading-AI-1.0\evo-trading-ai\v1.0-freqai
 Set-ExecutionPolicy -Scope Process Bypass -Force
 .\setup.ps1
 .\start-dry-run.ps1
 ```
 
-Interface do Freqtrade/FreqUI (quando habilitada pelo engine): http://127.0.0.1:8080
+Nesta primeira build a API/FreqUI fica desabilitada por segurança. O acompanhamento é feito por `watch-logs.ps1` e pelo pacote de diagnóstico.
 
 ## Diagnóstico
 
@@ -38,15 +38,16 @@ A qualquer momento, gere um ZIP para enviar ao ChatGPT:
 .\export-diagnostics.ps1
 ```
 
-O arquivo será criado em `diagnostics/` e inclui manifesto, configuração sanitizada, logs, banco/trades exportáveis quando disponíveis e lista de modelos FreqAI. Nunca inclui chaves ou secrets.
+O arquivo será criado em `diagnostics/` e inclui manifesto, configuração sanitizada, logs, trades exportáveis quando disponíveis, inventário de modelos FreqAI e resultados de backtest existentes. O coletor remove campos conhecidos de chave, secret, senha e token.
 
 ## Estrutura
 
 - `user_data/strategies/EvoFreqAiStrategy.py`: cérebro/estratégia EVO.
 - `user_data/config_evo.json`: configuração dry-run.
 - `docker-compose.yml`: engine Freqtrade/FreqAI estável.
-- `setup.ps1`: prepara diretórios e baixa a imagem.
+- `setup.ps1`: prepara diretórios, baixa a imagem e valida a estratégia.
 - `start-dry-run.ps1`: inicia dry-run com logs.
+- `watch-logs.ps1`: acompanha logs ao vivo.
 - `stop.ps1`: para o bot.
 - `export-diagnostics.ps1`: gera diagnóstico ZIP.
 - `tools/export_diagnostics.py`: coletor e sanitizador.
