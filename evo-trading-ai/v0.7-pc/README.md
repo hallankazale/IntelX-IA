@@ -26,3 +26,5 @@ Abre em `http://127.0.0.1:8767`.
 Não existe botão "treinar 12 horas" na v0.7. Repetir o mesmo histórico por horas não adiciona informação a um modelo supervisionado. O próximo passo só é liberado se o walk-forward mostrar consistência.
 
 Sem API key, sem corretora conectada, sem dinheiro real e sem alavancagem.
+
+CI: Python 3.12 + compilação + testes unitários.
